@@ -15,14 +15,14 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper
+  Paper,
 } from '@mui/material';
 import {
   CalendarToday as CalendarTodayIcon,
   Assessment as AssessmentIcon,
   Public as PublicIcon,
-  NotificationsActive as NotificationsActiveIcon,
-  Settings as SettingsIcon
+  People as PeopleIcon,
+  Settings as SettingsIcon,
 } from '@mui/icons-material';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -46,19 +46,19 @@ const StatsPage = () => {
 
     switch (newValue) {
       case 0:
-        router.push('/stats'); // Stay on the Stats page
+        router.push('/stats');
         break;
       case 1:
-        router.push('/calendar'); // Navigate to Calendar page
+        router.push('/calendar');
         break;
       case 2:
-        router.push('/territory'); // Navigate to Territory page
+        router.push('/territory');
         break;
       case 3:
-        router.push('/activity'); // Navigate to Activity page
+        router.push('/clients'); // Changed to navigate to Clients page
         break;
       case 4:
-        router.push('/settings'); // Navigate to Settings page
+        router.push('/settings');
         break;
       default:
         break;
@@ -67,16 +67,15 @@ const StatsPage = () => {
 
   return (
     <div className="container">
-      <AppBar position="fixed" style={{ backgroundColor: '#00ffd4', top: 0 }}>
-        <Toolbar className="toolbar">
-          <div className="logo-container">
-            <div className="logo-wrapper">
-              <Image src="/images/logo.png" alt="ZENO Logo" layout="fixed" width={30} height={30} />
-            </div>
-            <Typography variant="h6" className="title">
-              Leaderboards
-            </Typography>
+      <AppBar position="fixed" style={{ backgroundColor: '#00ffd4', top: 0, width: '100%' }}>
+        <Toolbar className="toolbar" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <div className="logo-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100px' }}>
+            <Image src="/images/logo.png" alt="ZENO Logo" layout="fixed" width={100} height={30} />
           </div>
+          <Typography variant="h6" className="title" style={{ flexGrow: 1, textAlign: 'center' }}>
+            Leaderboards
+          </Typography>
+          <div className="logo-placeholder" style={{ width: '100px' }}></div> {/* Placeholder for symmetry */}
         </Toolbar>
       </AppBar>
 
@@ -86,7 +85,7 @@ const StatsPage = () => {
         indicatorColor="primary"
         textColor="inherit"
         variant="fullWidth"
-        style={{ backgroundColor: '#00ffd4', color: '#ffffff', position: 'fixed', top: '64px', width: '100%' }} // Adjust position
+        style={{ backgroundColor: '#00ffd4', color: '#ffffff', position: 'fixed', top: '64px', width: '100%' }}
       >
         <Tab label="Setters" />
         <Tab label="Closers" />
@@ -98,7 +97,15 @@ const StatsPage = () => {
             value={filter}
             onChange={handleFilterChange}
             displayEmpty
-            style={{ backgroundColor: '#ffffff', color: '#000000', borderRadius: '5px', padding: '5px' }}
+            style={{
+              backgroundColor: '#ffffff',
+              color: '#000000',
+              borderRadius: '5px',
+              padding: '5px',
+              width: '100%',
+              maxWidth: '200px',
+              margin: '20px auto 0', // Add space between tabs and filter
+            }}
           >
             <MenuItem value="">
               <em>Filter by: All</em>
@@ -111,8 +118,8 @@ const StatsPage = () => {
 
         <div className="table-container">
           {selectedTab === 0 && (
-            <TableContainer component={Paper} style={{ margin: '20px', borderRadius: '10px' }}>
-              <Table>
+            <TableContainer component={Paper} style={{ margin: '20px auto', borderRadius: '10px', width: '100%', maxWidth: '800px' }}>
+              <Table style={{ tableLayout: 'fixed', width: '100%' }}>
                 <TableHead>
                   <TableRow>
                     <TableCell>Setter</TableCell>
@@ -126,14 +133,6 @@ const StatsPage = () => {
                     { name: 'Ahsan Zia', sets: 4 },
                     { name: 'Idris De Silva', sets: 3 },
                     { name: 'William Eva', sets: 3 },
-                    { name: 'Garret Mazur', sets: 2 },
-                    { name: 'Daniel Etches', sets: 2 },
-                    { name: 'Andrew', sets: 2 },
-                    { name: 'Holden B', sets: 2 },
-                    { name: 'Liam', sets: 2 },
-                    { name: 'Matt', sets: 2 },
-                    { name: 'Haris', sets: 2 },
-                    { name: 'Soomro', sets: 1 },
                   ].map((row, index) => (
                     <TableRow key={row.name}>
                       <TableCell>{`${index + 1}. ${row.name}`}</TableCell>
@@ -146,8 +145,8 @@ const StatsPage = () => {
           )}
 
           {selectedTab === 1 && (
-            <TableContainer component={Paper} style={{ margin: '20px', borderRadius: '10px' }}>
-              <Table>
+            <TableContainer component={Paper} style={{ margin: '20px auto', borderRadius: '10px', width: '100%', maxWidth: '800px' }}>
+              <Table style={{ tableLayout: 'fixed', width: '100%' }}>
                 <TableHead>
                   <TableRow>
                     <TableCell>Closer</TableCell>
@@ -162,14 +161,6 @@ const StatsPage = () => {
                     { name: 'Ahsan Zia', kw: 'xx', closes: 4 },
                     { name: 'Idris De Silva', kw: 'xx', closes: 3 },
                     { name: 'William Eva', kw: 'xx', closes: 3 },
-                    { name: 'Garret Mazur', kw: 'xx', closes: 2 },
-                    { name: 'Daniel Etches', kw: 'xx', closes: 2 },
-                    { name: 'Andrew', kw: 'xx', closes: 2 },
-                    { name: 'Holden B', kw: 'xx', closes: 2 },
-                    { name: 'Liam', kw: 'xx', closes: 2 },
-                    { name: 'Matt', kw: 'xx', closes: 2 },
-                    { name: 'Haris', kw: 'xx', closes: 2 },
-                    { name: 'Soomro', kw: 'xx', closes: 1 },
                   ].map((row, index) => (
                     <TableRow key={row.name}>
                       <TableCell>{`${index + 1}. ${row.name}`}</TableCell>
@@ -193,7 +184,7 @@ const StatsPage = () => {
         <BottomNavigationAction label="Stats" icon={<AssessmentIcon />} />
         <BottomNavigationAction label="Calendar" icon={<CalendarTodayIcon />} />
         <BottomNavigationAction label="Territory" icon={<PublicIcon />} />
-        <BottomNavigationAction label="Activity" icon={<NotificationsActiveIcon />} />
+        <BottomNavigationAction label="Clients" icon={<PeopleIcon />} /> {/* Changed from Activity to Clients */}
         <BottomNavigationAction label="Settings" icon={<SettingsIcon />} />
       </BottomNavigation>
 
@@ -203,47 +194,54 @@ const StatsPage = () => {
           width: 100vw;
           display: flex;
           flex-direction: column;
+          overflow-x: hidden; /* Prevent horizontal scrolling */
         }
 
         .toolbar {
           display: flex;
-          justify-content: space-between;
+          justify-content: center;
           align-items: center;
           padding: 0 16px;
+          width: 100%;
         }
 
-        .logo-container {
-          display: flex;
-          align-items: center;
-        }
-
-        .logo-wrapper {
-          width: 30px;
-          height: 30px;
-        }
-
-        .title {
-          margin-left: 10px;
-          font-weight: bold;
-          color: white;
+        .title-section {
+          flex-grow: 1;
+          text-align: center;
         }
 
         .content-container {
-          margin-top: 112px; /* Adjusted to account for both the header and tabs */
+          margin-top: 128px; /* Adjust for both AppBar and Tabs */
           flex-grow: 1;
-          overflow-y: auto; /* Enable scrolling if content overflows */
+          overflow-y: auto;
           padding-bottom: 80px; /* Avoid overlap with bottom navigation */
         }
 
         .filter-container {
-          display: flex;
-          justify-content: flex-end;
-          padding: 20px;
-          margin-right: 20px;
+          text-align: center;
+          margin-bottom: 20px; /* Add margin to separate from the table */
         }
 
         .table-container {
-          padding-bottom: 80px; /* Prevent the table from overlapping with the bottom navigation */
+          width: 100%;
+          max-width: 100%; /* Ensure full-width usage on small screens */
+          overflow-x: auto;
+        }
+
+        @media (max-width: 768px) {
+          .content-container {
+            margin-top: 96px; /* Slightly reduce margin on smaller screens */
+          }
+
+          .toolbar {
+            padding: 0 8px; /* Reduce padding on smaller screens */
+          }
+
+          .filter-container {
+            width: 100%;
+            justify-content: center;
+            margin-bottom: 16px;
+          }
         }
       `}</style>
     </div>

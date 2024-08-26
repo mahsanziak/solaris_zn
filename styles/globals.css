@@ -1,14 +1,15 @@
-/* Reset default browser margin and padding */
 html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
-    overflow: hidden; /* Prevents any scrollbar from appearing */
-  }
-  
-  /* Box sizing reset for all elements */
-  *, *::before, *::after {
-    box-sizing: border-box;
-  }
-  
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  overflow-x: hidden; /* Prevent horizontal scrolling inside components */
+}

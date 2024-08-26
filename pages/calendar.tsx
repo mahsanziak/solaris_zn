@@ -3,30 +3,29 @@ import {
   AppBar,
   Toolbar,
   Typography,
-  Select,
-  MenuItem,
   BottomNavigation,
-  BottomNavigationAction
+  BottomNavigationAction,
+  Select,
+  MenuItem
 } from '@mui/material';
 import {
   CalendarToday as CalendarTodayIcon,
   Assessment as AssessmentIcon,
   Public as PublicIcon,
-  NotificationsActive as NotificationsActiveIcon,
+  People as PeopleIcon,
   Settings as SettingsIcon
 } from '@mui/icons-material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DatePicker } from '@mui/x-date-pickers';
 import Image from 'next/image';
-import { useRouter } from 'next/router'; // Import useRouter from Next.js
+import { useRouter } from 'next/router';
 
 const CalendarPage = () => {
   const [value, setValue] = useState(1);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [filter, setFilter] = useState('');
-
-  const router = useRouter(); // Initialize useRouter
+  const router = useRouter();
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -36,25 +35,24 @@ const CalendarPage = () => {
     setFilter(event.target.value);
   };
 
-  // Handle page navigation for the bottom navigation buttons
   const handleNavigationChange = (event, newValue) => {
     setValue(newValue);
 
     switch (newValue) {
       case 0:
-        router.push('/stats'); // Navigate to Stats page
+        router.push('/stats');
         break;
       case 1:
-        router.push('/calendar'); // Navigate to Calendar page (current page)
+        router.push('/calendar');
         break;
       case 2:
-        router.push('/territory'); // Navigate to Territory page
+        router.push('/territory');
         break;
       case 3:
-        router.push('/activity'); // Navigate to Activity page
+        router.push('/clients'); // Changed to navigate to Clients page
         break;
       case 4:
-        router.push('/settings'); // Navigate to Settings page
+        router.push('/settings');
         break;
       default:
         break;
@@ -64,20 +62,21 @@ const CalendarPage = () => {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <div className="container">
-        <AppBar position="static" style={{ backgroundColor: '#00ffd4' }}>
+        <AppBar position="fixed" style={{ backgroundColor: '#00ffd4', top: 0 }}>
           <Toolbar className="toolbar">
-            <div className="logo-container">
-              <div className="logo-wrapper">
-                <Image src="/images/logo.png" alt="ZENO Logo" layout="fixed" width={30} height={30} />
-              </div>
+            <div className="logo-section">
+              <Image src="/images/logo.png" alt="ZENO Logo" layout="fixed" width={100} height={30} />
+            </div>
+            <div className="title-section">
               <Typography variant="h6" className="title">
                 Calendar
               </Typography>
             </div>
+            <div className="spacer-section"></div>
           </Toolbar>
         </AppBar>
 
-        <div className="calendar-container">
+        <div className="content-container">
           <div className="calendar-header">
             <Typography variant="h6" style={{ color: '#ffffff' }}>
               August 2024
@@ -87,13 +86,6 @@ const CalendarPage = () => {
               onChange={handleFilterChange}
               displayEmpty
               style={{ backgroundColor: '#ffffff', color: '#000000', borderRadius: '5px', padding: '5px' }}
-              MenuProps={{
-                PaperProps: {
-                  style: {
-                    backgroundColor: '#ffffff',
-                  },
-                },
-              }}
             >
               <MenuItem value="">
                 <em>Filter by: All</em>
@@ -135,14 +127,14 @@ const CalendarPage = () => {
 
         <BottomNavigation
           value={value}
-          onChange={handleNavigationChange} // Update the handler to navigate between pages
+          onChange={handleNavigationChange}
           showLabels
-          style={{ backgroundColor: '#00ffd4' }}
+          style={{ backgroundColor: '#00ffd4', position: 'fixed', bottom: 0, width: '100%' }}
         >
           <BottomNavigationAction label="Stats" icon={<AssessmentIcon />} />
           <BottomNavigationAction label="Calendar" icon={<CalendarTodayIcon />} />
           <BottomNavigationAction label="Territory" icon={<PublicIcon />} />
-          <BottomNavigationAction label="Activity" icon={<NotificationsActiveIcon />} />
+          <BottomNavigationAction label="Clients" icon={<PeopleIcon />} /> {/* Changed from Activity to Clients */}
           <BottomNavigationAction label="Settings" icon={<SettingsIcon />} />
         </BottomNavigation>
 
@@ -155,16 +147,40 @@ const CalendarPage = () => {
             background-color: #f0f4f7;
           }
 
-          .calendar-container {
-            flex-grow: 1;
-            padding: 20px;
+          .toolbar {
             display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            background-color: #ffffff;
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin: 20px;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 16px;
+          }
+
+          .logo-section {
+            display: flex;
+            align-items: center;
+            flex: 1;
+          }
+
+          .title-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+          }
+
+          .spacer-section {
+            flex: 1;
+          }
+
+          .title {
+            font-weight: bold;
+            color: white;
+          }
+
+          .content-container {
+            margin-top: 112px;
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 20px;
           }
 
           .calendar-header {
